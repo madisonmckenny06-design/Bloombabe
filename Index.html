@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bloom Babe | Elevated Living</title>
+  <meta name="description" content="Bloom Babe — Elevated living for women. Hosting, tablescaping, and intentional style." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@1,700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --plum:       #2A1520;
+      --plum-deep:  #1A0D14;
+      --gold:       #C9A87C;
+      --gold-dim:   rgba(201,168,124,0.18);
+      --rose:       #A85C4A;
+      --sage:       #6B7F5E;
+      --warm-white: #FAF0E8;
+      --muted:      #8A7A6A;
+      --card-bg:    rgba(255,255,255,0.04);
+      --card-border:rgba(201,168,124,0.14);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--plum-deep);
+      color: var(--warm-white);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 0 20px 60px;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* ── Ambient background bloom ── */
+    .bg-bloom {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 600px;
+      height: 600px;
+      pointer-events: none;
+      z-index: 0;
+      animation: slowSpin 80s linear infinite;
+      opacity: 0.028;
+    }
+    @keyframes slowSpin {
+      from { transform: translate(-50%,-50%) rotate(0deg); }
+      to   { transform: translate(-50%,-50%) rotate(360deg); }
+    }
+
+    /* Radial glow behind content */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(ellipse at 50% 20%, rgba(201,168,124,0.07) 0%, transparent 65%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── Layout wrapper ── */
+    .page {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 440px;
+      padding-top: 56px;
+    }
+
+    /* ── Header ── */
+    .header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      margin-bottom: 36px;
+    }
+
+    .bloom-mark {
+      width: 64px;
+      height: 64px;
+      margin-bottom: 18px;
+      animation: gentlePulse 6s ease-in-out infinite;
+    }
+    @keyframes gentlePulse {
+      0%, 100% { opacity: 0.9; transform: scale(1); }
+      50%       { opacity: 1;   transform: scale(1.04); }
+    }
+
+    .brand-name {
+      font-family: 'Bodoni Moda', Georgia, serif;
+      font-style: italic;
+      font-size: clamp(34px, 9vw, 46px);
+      font-weight: 700;
+      color: var(--warm-white);
+      letter-spacing: 2px;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .tagline {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 4px;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 14px;
+      opacity: 0.85;
+    }
+
+    .bio {
+      font-size: 14px;
+      font-weight: 300;
+      color: rgba(250,240,232,0.6);
+      line-height: 1.75;
+      max-width: 320px;
+    }
+
+    /* ── Divider ── */
+    .divider {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      margin: 28px 0;
+      opacity: 0.3;
+    }
+
+    /* ── Section label ── */
+    .section-label {
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 4px;
+      color: var(--gold);
+      text-transform: uppercase;
+      text-align: center;
+      margin-bottom: 14px;
+      opacity: 0.65;
+    }
+
+    /* ── Link cards ── */
+    .links {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      width: 100%;
+      margin-bottom: 28px;
+    }
+
+    .link-card {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 16px 20px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      text-decoration: none;
+      color: var(--warm-white);
+      transition: all 0.25s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .link-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(201,168,124,0.06), transparent);
+      opacity: 0;
+      transition: opacity 0.25s;
+    }
+
+    .link-card:hover::before { opacity: 1; }
+    .link-card:hover {
+      border-color: rgba(201,168,124,0.35);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    }
+
+    .link-card:active { transform: translateY(0); }
+
+    /* Primary CTA card */
+    .link-card.primary {
+      background: linear-gradient(135deg, var(--rose) 0%, #8A4035 100%);
+      border-color: transparent;
+    }
+    .link-card.primary:hover {
+      box-shadow: 0 10px 36px rgba(168,92,74,0.35);
+      border-color: transparent;
+    }
+
+    /* Gold accent card */
+    .link-card.gold {
+      background: linear-gradient(135deg, rgba(201,168,124,0.15), rgba(201,168,124,0.05));
+      border-color: rgba(201,168,124,0.3);
+    }
+
+    .link-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 18px;
+      background: rgba(255,255,255,0.08);
+    }
+
+    .link-card.primary .link-icon {
+      background: rgba(255,255,255,0.18);
+    }
+    .link-card.gold .link-icon {
+      background: rgba(201,168,124,0.2);
+    }
+
+    .link-text { flex: 1; }
+
+    .link-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--warm-white);
+      margin-bottom: 2px;
+      line-height: 1.2;
+    }
+
+    .link-subtitle {
+      font-size: 11px;
+      font-weight: 300;
+      color: rgba(250,240,232,0.5);
+      line-height: 1.3;
+    }
+
+    .link-card.primary .link-subtitle { color: rgba(255,255,255,0.65); }
+
+    .link-arrow {
+      font-size: 14px;
+      color: rgba(201,168,124,0.5);
+      flex-shrink: 0;
+      transition: transform 0.2s, color 0.2s;
+    }
+    .link-card:hover .link-arrow {
+      transform: translateX(3px);
+      color: var(--gold);
+    }
+    .link-card.primary .link-arrow { color: rgba(255,255,255,0.5); }
+    .link-card.primary:hover .link-arrow { color: #fff; }
+
+    /* ── Platform row ── */
+    .platforms {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 32px;
+      flex-wrap: wrap;
+    }
+
+    .platform-pill {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 14px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      text-decoration: none;
+      color: rgba(250,240,232,0.55);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      transition: all 0.2s;
+    }
+    .platform-pill:hover {
+      color: var(--gold);
+      border-color: rgba(201,168,124,0.3);
+      background: rgba(201,168,124,0.07);
+    }
+    .platform-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* ── Quote ── */
+    .quote-block {
+      text-align: center;
+      padding: 20px 24px;
+      background: rgba(201,168,124,0.05);
+      border: 1px solid rgba(201,168,124,0.1);
+      border-radius: 14px;
+      margin-bottom: 28px;
+    }
+
+    .quote-text {
+      font-family: 'Bodoni Moda', Georgia, serif;
+      font-style: italic;
+      font-size: 15px;
+      color: rgba(250,240,232,0.7);
+      line-height: 1.7;
+      margin-bottom: 8px;
+    }
+
+    .quote-attr {
+      font-size: 10px;
+      letter-spacing: 2px;
+      color: var(--gold);
+      opacity: 0.6;
+      text-transform: uppercase;
+    }
+
+    /* ── Footer ── */
+    .footer {
+      text-align: center;
+      font-size: 10px;
+      color: rgba(250,240,232,0.2);
+      letter-spacing: 1px;
+      line-height: 1.8;
+    }
+    .footer a { color: rgba(201,168,124,0.35); text-decoration: none; }
+    .footer a:hover { color: var(--gold); }
+
+    /* ── Animations on load ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .header        { animation: fadeUp 0.7s ease both; }
+    .links         { animation: fadeUp 0.7s 0.15s ease both; }
+    .platforms     { animation: fadeUp 0.7s 0.25s ease both; }
+    .quote-block   { animation: fadeUp 0.7s 0.3s ease both; }
+    .footer        { animation: fadeUp 0.7s 0.4s ease both; }
+
+    /* ── Reduced motion ── */
+    @media (prefers-reduced-motion: reduce) {
+      .bg-bloom, .bloom-mark { animation: none; }
+      .header, .links, .platforms, .quote-block, .footer { animation: none; }
+    }
+
+    /* ── Mobile refinements ── */
+    @media (max-width: 380px) {
+      .link-card { padding: 14px 16px; gap: 12px; }
+      .link-icon { width: 36px; height: 36px; font-size: 16px; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Ambient background bloom SVG -->
+  <svg class="bg-bloom" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <ellipse cx="100" cy="60"  rx="18" ry="38" fill="#C9A87C" transform="rotate(0   100 100)" />
+    <ellipse cx="100" cy="60"  rx="18" ry="38" fill="#C9A87C" transform="rotate(60  100 100)" />
+    <ellipse cx="100" cy="60"  rx="18" ry="38" fill="#C9A87C" transform="rotate(120 100 100)" />
+    <ellipse cx="100" cy="60"  rx="18" ry="38" fill="#C9A87C" transform="rotate(180 100 100)" />
+    <ellipse cx="100" cy="60"  rx="18" ry="38" fill="#C9A87C" transform="rotate(240 100 100)" />
+    <ellipse cx="100" cy="60"  rx="18" ry="38" fill="#C9A87C" transform="rotate(300 100 100)" />
+    <circle cx="100" cy="100" r="20" fill="#C9A87C" />
+  </svg>
+
+  <div class="page">
+
+    <!-- ── Header ── -->
+    <header class="header">
+      <!-- Bloom mark SVG -->
+      <svg class="bloom-mark" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Bloom Babe logo mark">
+        <ellipse cx="40" cy="16" rx="9"  ry="18" fill="#C9A87C" opacity="0.82" transform="rotate(0   40 40)" />
+        <ellipse cx="40" cy="16" rx="9"  ry="18" fill="#C9A87C" opacity="0.82" transform="rotate(60  40 40)" />
+        <ellipse cx="40" cy="16" rx="9"  ry="18" fill="#C9A87C" opacity="0.82" transform="rotate(120 40 40)" />
+        <ellipse cx="40" cy="16" rx="9"  ry="18" fill="#C9A87C" opacity="0.82" transform="rotate(180 40 40)" />
+        <ellipse cx="40" cy="16" rx="9"  ry="18" fill="#C9A87C" opacity="0.82" transform="rotate(240 40 40)" />
+        <ellipse cx="40" cy="16" rx="9"  ry="18" fill="#C9A87C" opacity="0.82" transform="rotate(300 40 40)" />
+        <circle  cx="40" cy="40" r="9"   fill="#1A0D14" />
+        <circle  cx="40" cy="40" r="4.5" fill="#C9A87C" />
+      </svg>
+
+      <h1 class="brand-name">Bloom Babe</h1>
+      <p class="tagline">Elevated Living</p>
+      <p class="bio">Teaching women to host beautifully, dress intentionally, and set a table worth gathering around. 🌸</p>
+    </header>
+
+    <div class="divider"></div>
+
+    <!-- ── Primary Links ── -->
+    <p class="section-label">Shop & Explore</p>
+
+    <nav class="links" aria-label="Main links">
+
+      <!-- Amazon Storefront — PRIMARY -->
+      <a href="https://amazon.com/shop/bloombabe" class="link-card primary" target="_blank" rel="noopener">
+        <div class="link-icon">🛒</div>
+        <div class="link-text">
+          <div class="link-title">Shop My Amazon Storefront</div>
+          <div class="link-subtitle">Tablescaping · Hosting · Style — all linked</div>
+        </div>
+        <span class="link-arrow">→</span>
+      </a>
+
+      <!-- LTK -->
+      <a href="https://liketoknow.it/bloombabe" class="link-card gold" target="_blank" rel="noopener">
+        <div class="link-icon">✦</div>
+        <div class="link-text">
+          <div class="link-title">Shop My LTK</div>
+          <div class="link-subtitle">Shoppable outfits & home finds</div>
+        </div>
+        <span class="link-arrow">→</span>
+      </a>
+
+      <!-- Digital Product -->
+      <a href="https://bloombabe.gumroad.com" class="link-card" target="_blank" rel="noopener">
+        <div class="link-icon">🌿</div>
+        <div class="link-text">
+          <div class="link-title">Bloom Babe Hosting Guide</div>
+          <div class="link-subtitle">The Bloom Table Starter Kit — $27</div>
+        </div>
+        <span class="link-arrow">→</span>
+      </a>
+
+      <!-- YouTube -->
+      <a href="https://youtube.com/@bloombabe" class="link-card" target="_blank" rel="noopener">
+        <div class="link-icon">🎬</div>
+        <div class="link-text">
+          <div class="link-title">Watch on YouTube</div>
+          <div class="link-subtitle">Tablescaping tutorials · Hosting vlogs · Style</div>
+        </div>
+        <span class="link-arrow">→</span>
+      </a>
+
+      <!-- Pinterest -->
+      <a href="https://pinterest.com/bloombabe" class="link-card" target="_blank" rel="noopener">
+        <div class="link-icon">📌</div>
+        <div class="link-text">
+          <div class="link-title">Save on Pinterest</div>
+          <div class="link-subtitle">Hosting inspo · Tables · Style boards</div>
+        </div>
+        <span class="link-arrow">→</span>
+      </a>
+
+      <!-- Work with me -->
+      <a href="mailto:hello@bloombabe.com" class="link-card" target="_blank" rel="noopener">
+        <div class="link-icon">💌</div>
+        <div class="link-text">
+          <div class="link-title">Work With Me</div>
+          <div class="link-subtitle">Brand collabs · Hosting consults · Styling</div>
+        </div>
+        <span class="link-arrow">→</span>
+      </a>
+
+    </nav>
+
+    <!-- ── Platform pills ── -->
+    <div class="divider"></div>
+    <p class="section-label">Follow Along</p>
+
+    <div class="platforms">
+      <a href="https://instagram.com/bloombabe" class="platform-pill" target="_blank" rel="noopener" aria-label="Instagram">
+        <span class="platform-dot" style="background:#E1306C;"></span>Instagram
+      </a>
+      <a href="https://tiktok.com/@bloombabe" class="platform-pill" target="_blank" rel="noopener" aria-label="TikTok">
+        <span class="platform-dot" style="background:#69C9D0;"></span>TikTok
+      </a>
+      <a href="https://threads.net/@bloombabe" class="platform-pill" target="_blank" rel="noopener" aria-label="Threads">
+        <span class="platform-dot" style="background:#C9A87C;"></span>Threads
+      </a>
+      <a href="https://youtube.com/@bloombabe" class="platform-pill" target="_blank" rel="noopener" aria-label="YouTube">
+        <span class="platform-dot" style="background:#FF0000;"></span>YouTube
+      </a>
+      <a href="https://pinterest.com/bloombabe" class="platform-pill" target="_blank" rel="noopener" aria-label="Pinterest">
+        <span class="platform-dot" style="background:#E60023;"></span>Pinterest
+      </a>
+    </div>
+
+    <!-- ── Brand quote ── -->
+    <div class="quote-block">
+      <p class="quote-text">"How you live is who you are — at your table, in your wardrobe, and in every room you walk into."</p>
+      <p class="quote-attr">Bloom Babe · Elevated Living</p>
+    </div>
+
+    <!-- ── Footer ── -->
+    <footer class="footer">
+      <p>© 2026 Bloom Babe · All rights reserved</p>
+      <p style="margin-top:4px;">
+        <a href="mailto:hello@bloombabe.com">hello@bloombabe.com</a>
+      </p>
+    </footer>
+
+  </div><!-- /page -->
+
+</body>
+</html>
